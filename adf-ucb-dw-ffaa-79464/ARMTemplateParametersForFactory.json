@@ -11,6 +11,9 @@
 		"Origen_ERP_FuerzasArmadas_password": {
 			"value": ""
 		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
 		"Destino_DataLake_properties_typeProperties_url": {
 			"value": "https://saucbffaa79464.dfs.core.windows.net/"
 		},
@@ -22,6 +25,15 @@
 		},
 		"Origen_ERP_FuerzasArmadas_properties_typeProperties_userName": {
 			"value": "userSisGer"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "sql-ucb-sisger-ffaa-79464.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "dw_FFAA"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "Santiago"
 		}
 	}
 }

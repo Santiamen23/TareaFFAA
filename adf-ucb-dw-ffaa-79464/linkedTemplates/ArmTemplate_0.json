@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Origen_ERP_FuerzasArmadas'"
 		},
+		"AzureSqlDatabase1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
+		},
 		"Destino_DataLake_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://saucbffaa79464.dfs.core.windows.net/"
@@ -30,6 +34,18 @@
 		"Origen_ERP_FuerzasArmadas_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "userSisGer"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-ucb-sisger-ffaa-79464.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dw_FFAA"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Santiago"
 		}
 	},
 	"variables": {
@@ -70,6 +86,28 @@
 					"password": {
 						"type": "SecureString",
 						"value": "[parameters('Origen_ERP_FuerzasArmadas_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSqlDatabase1_password')]"
 					}
 				}
 			},
@@ -642,594 +680,398 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Bronce_cargar_datos')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
+			"name": "[concat(parameters('factoryName'), '/mb_bronce_efectivos')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"folder": {
-					"name": "Bronce"
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
 				},
-				"type": "MappingDataFlow",
+				"folder": {
+					"name": "mbBronce"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_efectivo",
+						"type": "varchar"
+					},
+					{
+						"name": "id_especialidad",
+						"type": "varchar"
+					},
+					{
+						"name": "id_unidad_actual",
+						"type": "varchar"
+					},
+					{
+						"name": "id_rango_actual",
+						"type": "varchar"
+					},
+					{
+						"name": "nombre",
+						"type": "varchar"
+					},
+					{
+						"name": "ci",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_nacimiento",
+						"type": "varchar"
+					},
+					{
+						"name": "genero",
+						"type": "varchar"
+					},
+					{
+						"name": "departamento_origen",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_ingreso",
+						"type": "varchar"
+					},
+					{
+						"name": "estado",
+						"type": "varchar"
+					},
+					{
+						"name": "salario_mensual",
+						"type": "varchar"
+					}
+				],
 				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "bronce_efectivos",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_especialidades",
-								"type": "DatasetReference"
-							},
-							"name": "source2"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_estruct_org",
-								"type": "DatasetReference"
-							},
-							"name": "source3"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_mov_personal",
-								"type": "DatasetReference"
-							},
-							"name": "source4"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_operaciones",
-								"type": "DatasetReference"
-							},
-							"name": "source5"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_rangos",
-								"type": "DatasetReference"
-							},
-							"name": "source6"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_tipo_movs",
-								"type": "DatasetReference"
-							},
-							"name": "source7"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_tipo_operacion",
-								"type": "DatasetReference"
-							},
-							"name": "source8"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_unidades",
-								"type": "DatasetReference"
-							},
-							"name": "source9"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_zonas",
-								"type": "DatasetReference"
-							},
-							"name": "source10"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "bronce_efectivos",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_especialidades",
-								"type": "DatasetReference"
-							},
-							"name": "sink2"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_estruct_org",
-								"type": "DatasetReference"
-							},
-							"name": "sink3"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_mov_personal",
-								"type": "DatasetReference"
-							},
-							"name": "sink4"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_operaciones",
-								"type": "DatasetReference"
-							},
-							"name": "sink5"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_rangos",
-								"type": "DatasetReference"
-							},
-							"name": "sink6"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_tipo_movs",
-								"type": "DatasetReference"
-							},
-							"name": "sink7"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_tipo_operacion",
-								"type": "DatasetReference"
-							},
-							"name": "sink8"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_unidades",
-								"type": "DatasetReference"
-							},
-							"name": "sink9"
-						},
-						{
-							"dataset": {
-								"referenceName": "bronce_zonas",
-								"type": "DatasetReference"
-							},
-							"name": "sink10"
-						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(output(",
-						"          id_efectivo as integer,",
-						"          id_especialidad as integer,",
-						"          id_unidad_actual as integer,",
-						"          id_rango_actual as integer,",
-						"          nombre as string,",
-						"          ci as string,",
-						"          fecha_nacimiento as string,",
-						"          genero as string,",
-						"          departamento_origen as string,",
-						"          fecha_ingreso as string,",
-						"          estado as string,",
-						"          salario_mensual as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source(output(",
-						"          id_especialidad as integer,",
-						"          nombre as string,",
-						"          area as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source2",
-						"source(output(",
-						"          id_estructura as integer,",
-						"          id_padre as integer,",
-						"          nivel as string,",
-						"          nombre as string,",
-						"          sigla as string,",
-						"          tipo as string,",
-						"          cobertura_departamentos as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source3",
-						"source(output(",
-						"          id_movimiento as integer,",
-						"          id_efectivo as integer,",
-						"          id_unidad_destino as integer,",
-						"          id_rango as integer,",
-						"          id_tipo as integer,",
-						"          fecha_movimiento as string,",
-						"          antiguedad_anios as string,",
-						"          salario_mensual as string,",
-						"          observaciones as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source4",
-						"source(output(",
-						"          id_operacion as integer,",
-						"          id_tipo as integer,",
-						"          id_unidad_resp as integer,",
-						"          id_zona as integer,",
-						"          nombre_operacion as string,",
-						"          fecha_inicio as string,",
-						"          fecha_fin as string,",
-						"          efectivos_desplegados as string,",
-						"          vehiculos_utilizados as string,",
-						"          duracion_dias as string,",
-						"          costo_operacion as string,",
-						"          resultado as string,",
-						"          detenidos as string,",
-						"          area_km2 as string,",
-						"          incidentes as string,",
-						"          observaciones as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source5",
-						"source(output(",
-						"          id_rango as integer,",
-						"          nombre as string,",
-						"          categoria as string,",
-						"          nivel_jerarquico as integer,",
-						"          abreviatura as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source6",
-						"source(output(",
-						"          id_tipo as integer,",
-						"          nombre as string,",
-						"          descripcion as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source7",
-						"source(output(",
-						"          id_tipo as integer,",
-						"          nombre as string,",
-						"          categoria as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source8",
-						"source(output(",
-						"          id_unidad as integer,",
-						"          id_brigada as integer,",
-						"          nombre as string,",
-						"          codigo as string,",
-						"          ciudad as string,",
-						"          departamento as string,",
-						"          tipo_cuartel as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source9",
-						"source(output(",
-						"          id_zona as integer,",
-						"          nombre as string,",
-						"          departamento as string,",
-						"          frontera_con as string,",
-						"          tipo_terreno as string,",
-						"          altitud_msnm as integer,",
-						"          nivel_riesgo as string,",
-						"          acceso_carretero as boolean",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source10",
-						"source1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          id_efectivo as integer,",
-						"          id_especialidad as integer,",
-						"          id_unidad_actual as integer,",
-						"          id_rango_actual as integer,",
-						"          nombre as string,",
-						"          ci as string,",
-						"          fecha_nacimiento as string,",
-						"          genero as string,",
-						"          departamento_origen as string,",
-						"          fecha_ingreso as string,",
-						"          estado as string,",
-						"          salario_mensual as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          id_efectivo,",
-						"          id_especialidad,",
-						"          id_unidad_actual,",
-						"          id_rango_actual,",
-						"          nombre,",
-						"          ci,",
-						"          fecha_nacimiento,",
-						"          genero,",
-						"          departamento_origen,",
-						"          fecha_ingreso,",
-						"          estado,",
-						"          salario_mensual",
-						"     )) ~> sink1",
-						"source2 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          id_especialidad as integer,",
-						"          nombre as string,",
-						"          area as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          id_especialidad,",
-						"          nombre,",
-						"          area",
-						"     )) ~> sink2",
-						"source3 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          id_estructura as integer,",
-						"          id_padre as integer,",
-						"          nivel as string,",
-						"          nombre as string,",
-						"          sigla as string,",
-						"          tipo as string,",
-						"          cobertura_departamentos as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          id_estructura,",
-						"          id_padre,",
-						"          nivel,",
-						"          nombre,",
-						"          sigla,",
-						"          tipo,",
-						"          cobertura_departamentos",
-						"     )) ~> sink3",
-						"source4 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          id_movimiento as integer,",
-						"          id_efectivo as integer,",
-						"          id_unidad_destino as integer,",
-						"          id_rango as integer,",
-						"          id_tipo as integer,",
-						"          fecha_movimiento as string,",
-						"          antiguedad_anios as string,",
-						"          salario_mensual as string,",
-						"          observaciones as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          id_movimiento,",
-						"          id_efectivo,",
-						"          id_unidad_destino,",
-						"          id_rango,",
-						"          id_tipo,",
-						"          fecha_movimiento,",
-						"          antiguedad_anios,",
-						"          salario_mensual,",
-						"          observaciones",
-						"     )) ~> sink4",
-						"source5 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          id_operacion as integer,",
-						"          id_tipo as integer,",
-						"          id_unidad_resp as integer,",
-						"          id_zona as integer,",
-						"          nombre_operacion as string,",
-						"          fecha_inicio as string,",
-						"          fecha_fin as string,",
-						"          efectivos_desplegados as string,",
-						"          vehiculos_utilizados as string,",
-						"          duracion_dias as string,",
-						"          costo_operacion as string,",
-						"          resultado as string,",
-						"          detenidos as string,",
-						"          area_km2 as string,",
-						"          incidentes as string,",
-						"          observaciones as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          id_operacion,",
-						"          id_tipo,",
-						"          id_unidad_resp,",
-						"          id_zona,",
-						"          nombre_operacion,",
-						"          fecha_inicio,",
-						"          fecha_fin,",
-						"          efectivos_desplegados,",
-						"          vehiculos_utilizados,",
-						"          duracion_dias,",
-						"          costo_operacion,",
-						"          resultado,",
-						"          detenidos,",
-						"          area_km2,",
-						"          incidentes,",
-						"          observaciones",
-						"     )) ~> sink5",
-						"source6 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          id_rango as integer,",
-						"          nombre as string,",
-						"          categoria as string,",
-						"          nivel_jerarquico as integer,",
-						"          abreviatura as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          id_rango,",
-						"          nombre,",
-						"          categoria,",
-						"          nivel_jerarquico,",
-						"          abreviatura",
-						"     )) ~> sink6",
-						"source7 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          id_tipo as integer,",
-						"          nombre as string,",
-						"          descripcion as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          id_tipo,",
-						"          nombre,",
-						"          descripcion",
-						"     )) ~> sink7",
-						"source8 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          id_tipo as integer,",
-						"          nombre as string,",
-						"          categoria as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          id_tipo,",
-						"          nombre,",
-						"          categoria",
-						"     )) ~> sink8",
-						"source9 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          id_unidad as integer,",
-						"          id_brigada as integer,",
-						"          nombre as string,",
-						"          codigo as string,",
-						"          ciudad as string,",
-						"          departamento as string,",
-						"          tipo_cuartel as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          id_unidad,",
-						"          id_brigada,",
-						"          nombre,",
-						"          codigo,",
-						"          ciudad,",
-						"          departamento,",
-						"          tipo_cuartel",
-						"     )) ~> sink9",
-						"source10 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          id_zona as integer,",
-						"          nombre as string,",
-						"          departamento as string,",
-						"          frontera_con as string,",
-						"          tipo_terreno as string,",
-						"          altitud_msnm as integer,",
-						"          nivel_riesgo as string,",
-						"          acceso_carretero as boolean",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          id_zona,",
-						"          nombre,",
-						"          departamento,",
-						"          frontera_con,",
-						"          tipo_terreno,",
-						"          altitud_msnm,",
-						"          nivel_riesgo,",
-						"          acceso_carretero",
-						"     )) ~> sink10"
-					]
+					"schema": "bronze",
+					"table": "tbl_efectivos"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/bronce_efectivos')]",
-				"[concat(variables('factoryId'), '/datasets/bronce_especialidades')]",
-				"[concat(variables('factoryId'), '/datasets/bronce_estruct_org')]",
-				"[concat(variables('factoryId'), '/datasets/bronce_mov_personal')]",
-				"[concat(variables('factoryId'), '/datasets/bronce_operaciones')]",
-				"[concat(variables('factoryId'), '/datasets/bronce_rangos')]",
-				"[concat(variables('factoryId'), '/datasets/bronce_tipo_movs')]",
-				"[concat(variables('factoryId'), '/datasets/bronce_tipo_operacion')]",
-				"[concat(variables('factoryId'), '/datasets/bronce_unidades')]",
-				"[concat(variables('factoryId'), '/datasets/bronce_zonas')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/mb_bronce_especialidades')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "mbBronce"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_especialidad",
+						"type": "varchar"
+					},
+					{
+						"name": "nombre",
+						"type": "varchar"
+					},
+					{
+						"name": "area",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "tbl_especialidades"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/mb_bronce_estruct_org')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "mbBronce"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_estructura",
+						"type": "varchar"
+					},
+					{
+						"name": "id_padre",
+						"type": "varchar"
+					},
+					{
+						"name": "nivel",
+						"type": "varchar"
+					},
+					{
+						"name": "nombre",
+						"type": "varchar"
+					},
+					{
+						"name": "sigla",
+						"type": "varchar"
+					},
+					{
+						"name": "tipo",
+						"type": "varchar"
+					},
+					{
+						"name": "cobertura_departamentos",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "tbl_estructura_organizacional"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/mb_bronce_mov_personal')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "mbBronce"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_movimiento",
+						"type": "varchar"
+					},
+					{
+						"name": "id_efectivo",
+						"type": "varchar"
+					},
+					{
+						"name": "id_unidad_destino",
+						"type": "varchar"
+					},
+					{
+						"name": "id_rango",
+						"type": "varchar"
+					},
+					{
+						"name": "id_tipo",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_movimiento",
+						"type": "varchar"
+					},
+					{
+						"name": "antiguedad_anios",
+						"type": "varchar"
+					},
+					{
+						"name": "salario_mensual",
+						"type": "varchar"
+					},
+					{
+						"name": "observaciones",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "tbl_movimientos_personal"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/mb_bronce_operaciones')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "mbBronce"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_operacion",
+						"type": "varchar"
+					},
+					{
+						"name": "id_tipo",
+						"type": "varchar"
+					},
+					{
+						"name": "id_unidad_resp",
+						"type": "varchar"
+					},
+					{
+						"name": "id_zona",
+						"type": "varchar"
+					},
+					{
+						"name": "nombre_operacion",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_inicio",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_fin",
+						"type": "varchar"
+					},
+					{
+						"name": "efectivos_desplegados",
+						"type": "varchar"
+					},
+					{
+						"name": "vehiculos_utilizados",
+						"type": "varchar"
+					},
+					{
+						"name": "duracion_dias",
+						"type": "varchar"
+					},
+					{
+						"name": "costo_operacion",
+						"type": "varchar"
+					},
+					{
+						"name": "resultado",
+						"type": "varchar"
+					},
+					{
+						"name": "detenidos",
+						"type": "varchar"
+					},
+					{
+						"name": "area_km2",
+						"type": "varchar"
+					},
+					{
+						"name": "incidentes",
+						"type": "varchar"
+					},
+					{
+						"name": "observaciones",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "tbl_operaciones"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/mb_bronce_rangos')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "mbBronce"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_rango",
+						"type": "varchar"
+					},
+					{
+						"name": "nombre",
+						"type": "varchar"
+					},
+					{
+						"name": "categoria",
+						"type": "varchar"
+					},
+					{
+						"name": "nivel_jerarquico",
+						"type": "varchar"
+					},
+					{
+						"name": "abreviatura",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "tbl_rangos"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/mb_bronce_tipo_movs')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "mbBronce"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_tipo",
+						"type": "varchar"
+					},
+					{
+						"name": "nombre",
+						"type": "varchar"
+					},
+					{
+						"name": "descripcion",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "tbl_tipos_movimiento"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		}
 	]
