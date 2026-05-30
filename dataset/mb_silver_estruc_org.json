@@ -1,0 +1,55 @@
+{
+	"name": "mb_silver_estruc_org",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "mbSilver"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "estructura_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_estructura",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_padre",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "nivel",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sigla",
+				"type": "varchar"
+			},
+			{
+				"name": "tipo",
+				"type": "varchar"
+			},
+			{
+				"name": "cobertura_departamentos",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "silver",
+			"table": "tbl_estructura_organizacional"
+		}
+	}
+}
