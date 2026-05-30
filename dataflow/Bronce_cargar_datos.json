@@ -12,70 +12,70 @@
 						"referenceName": "bronce_efectivos",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "Efectivos"
 				},
 				{
 					"dataset": {
 						"referenceName": "bronce_especialidades",
 						"type": "DatasetReference"
 					},
-					"name": "source2"
+					"name": "Especialidades"
 				},
 				{
 					"dataset": {
 						"referenceName": "bronce_estruct_org",
 						"type": "DatasetReference"
 					},
-					"name": "source3"
+					"name": "EstructuraOrganizacional"
 				},
 				{
 					"dataset": {
 						"referenceName": "bronce_mov_personal",
 						"type": "DatasetReference"
 					},
-					"name": "source4"
+					"name": "MovimientoPersonal"
 				},
 				{
 					"dataset": {
 						"referenceName": "bronce_operaciones",
 						"type": "DatasetReference"
 					},
-					"name": "source5"
+					"name": "Operaciones"
 				},
 				{
 					"dataset": {
 						"referenceName": "bronce_rangos",
 						"type": "DatasetReference"
 					},
-					"name": "source6"
+					"name": "Rangos"
 				},
 				{
 					"dataset": {
 						"referenceName": "bronce_tipo_movs",
 						"type": "DatasetReference"
 					},
-					"name": "source7"
+					"name": "TipoMovimientos"
 				},
 				{
 					"dataset": {
 						"referenceName": "bronce_tipo_operacion",
 						"type": "DatasetReference"
 					},
-					"name": "source8"
+					"name": "tipooperacion"
 				},
 				{
 					"dataset": {
 						"referenceName": "bronce_unidades",
 						"type": "DatasetReference"
 					},
-					"name": "source9"
+					"name": "Unidades"
 				},
 				{
 					"dataset": {
 						"referenceName": "bronce_zonas",
 						"type": "DatasetReference"
 					},
-					"name": "source10"
+					"name": "Zonas"
 				}
 			],
 			"sinks": [
@@ -169,7 +169,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
+				"     format: 'table') ~> Efectivos",
 				"source(output(",
 				"          id_especialidad as integer,",
 				"          nombre as string,",
@@ -178,7 +178,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source2",
+				"     format: 'table') ~> Especialidades",
 				"source(output(",
 				"          id_estructura as integer,",
 				"          id_padre as integer,",
@@ -191,7 +191,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source3",
+				"     format: 'table') ~> EstructuraOrganizacional",
 				"source(output(",
 				"          id_movimiento as integer,",
 				"          id_efectivo as integer,",
@@ -206,7 +206,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source4",
+				"     format: 'table') ~> MovimientoPersonal",
 				"source(output(",
 				"          id_operacion as integer,",
 				"          id_tipo as integer,",
@@ -228,7 +228,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source5",
+				"     format: 'table') ~> Operaciones",
 				"source(output(",
 				"          id_rango as integer,",
 				"          nombre as string,",
@@ -239,7 +239,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source6",
+				"     format: 'table') ~> Rangos",
 				"source(output(",
 				"          id_tipo as integer,",
 				"          nombre as string,",
@@ -248,7 +248,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source7",
+				"     format: 'table') ~> TipoMovimientos",
 				"source(output(",
 				"          id_tipo as integer,",
 				"          nombre as string,",
@@ -257,7 +257,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source8",
+				"     format: 'table') ~> tipooperacion",
 				"source(output(",
 				"          id_unidad as integer,",
 				"          id_brigada as integer,",
@@ -270,7 +270,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source9",
+				"     format: 'table') ~> Unidades",
 				"source(output(",
 				"          id_zona as integer,",
 				"          nombre as string,",
@@ -284,8 +284,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source10",
-				"source1 sink(allowSchemaDrift: true,",
+				"     format: 'table') ~> Zonas",
+				"Efectivos sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id_efectivo as string,",
@@ -323,7 +323,7 @@
 				"          estado,",
 				"          salario_mensual",
 				"     )) ~> sink1",
-				"source2 sink(allowSchemaDrift: true,",
+				"Especialidades sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id_especialidad as string,",
@@ -343,7 +343,7 @@
 				"          nombre,",
 				"          area",
 				"     )) ~> sink2",
-				"source3 sink(allowSchemaDrift: true,",
+				"EstructuraOrganizacional sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id_estructura as string,",
@@ -371,7 +371,7 @@
 				"          tipo,",
 				"          cobertura_departamentos",
 				"     )) ~> sink3",
-				"source4 sink(allowSchemaDrift: true,",
+				"MovimientoPersonal sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id_movimiento as string,",
@@ -403,7 +403,7 @@
 				"          salario_mensual,",
 				"          observaciones",
 				"     )) ~> sink4",
-				"source5 sink(allowSchemaDrift: true,",
+				"Operaciones sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id_operacion as string,",
@@ -449,7 +449,7 @@
 				"          incidentes,",
 				"          observaciones",
 				"     )) ~> sink5",
-				"source6 sink(allowSchemaDrift: true,",
+				"Rangos sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id_rango as string,",
@@ -473,7 +473,7 @@
 				"          nivel_jerarquico,",
 				"          abreviatura",
 				"     )) ~> sink6",
-				"source7 sink(allowSchemaDrift: true,",
+				"TipoMovimientos sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id_tipo as string,",
@@ -493,7 +493,7 @@
 				"          nombre,",
 				"          descripcion",
 				"     )) ~> sink7",
-				"source8 sink(allowSchemaDrift: true,",
+				"tipooperacion sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id_tipo as string,",
@@ -513,7 +513,7 @@
 				"          nombre,",
 				"          categoria",
 				"     )) ~> sink8",
-				"source9 sink(allowSchemaDrift: true,",
+				"Unidades sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id_unidad as string,",
@@ -541,7 +541,7 @@
 				"          departamento,",
 				"          tipo_cuartel",
 				"     )) ~> sink9",
-				"source10 sink(allowSchemaDrift: true,",
+				"Zonas sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id_zona as string,",
