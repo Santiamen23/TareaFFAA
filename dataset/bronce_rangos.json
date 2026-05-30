@@ -5,6 +5,9 @@
 			"referenceName": "Origen_ERP_FuerzasArmadas",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Bronce"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
