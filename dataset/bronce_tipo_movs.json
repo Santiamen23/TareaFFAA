@@ -1,0 +1,30 @@
+{
+	"name": "bronce_tipo_movs",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Origen_ERP_FuerzasArmadas",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_tipo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "nombre",
+				"type": "varchar"
+			},
+			{
+				"name": "descripcion",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "oltp",
+			"table": "tbl_tipos_movimiento"
+		}
+	}
+}
