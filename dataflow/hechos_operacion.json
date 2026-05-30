@@ -1,0 +1,220 @@
+{
+	"name": "hechos_operacion",
+	"properties": {
+		"folder": {
+			"name": "Gold"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "mb_silver_operaciones",
+						"type": "DatasetReference"
+					},
+					"name": "Operaciones"
+				},
+				{
+					"dataset": {
+						"referenceName": "mb_gold_dim_tipo_operacion",
+						"type": "DatasetReference"
+					},
+					"name": "DimTipoOperacion"
+				},
+				{
+					"dataset": {
+						"referenceName": "mb_gold_dim_unidad",
+						"type": "DatasetReference"
+					},
+					"name": "DimUnidad"
+				},
+				{
+					"dataset": {
+						"referenceName": "mb_gold_dim_zona",
+						"type": "DatasetReference"
+					},
+					"name": "DimZona"
+				},
+				{
+					"dataset": {
+						"referenceName": "mb_gold_dim_tiempo",
+						"type": "DatasetReference"
+					},
+					"name": "DimTiempo"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "mb_gold_hechos_operaciones",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Tipo"
+				},
+				{
+					"name": "Unidad"
+				},
+				{
+					"name": "Zona"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "fecha"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          operacion_key as integer,",
+				"          id_operacion as integer,",
+				"          id_tipo as integer,",
+				"          id_unidad_resp as integer,",
+				"          id_zona as integer,",
+				"          nombre_operacion as string,",
+				"          fecha_inicio as date,",
+				"          fecha_fin as date,",
+				"          efectivos_desplegados as integer,",
+				"          vehiculos_utilizados as integer,",
+				"          duracion_dias as integer,",
+				"          costo_operacion as decimal(18,2),",
+				"          resultado as string,",
+				"          detenidos as integer,",
+				"          area_km2 as decimal(18,2),",
+				"          incidentes as integer,",
+				"          observaciones as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> Operaciones",
+				"source(output(",
+				"          tipo_operacion_key as integer,",
+				"          id_tipo as integer,",
+				"          nombre as string,",
+				"          categoria as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> DimTipoOperacion",
+				"source(output(",
+				"          unidad_key as integer,",
+				"          id_unidad as integer,",
+				"          nombre as string,",
+				"          codigo as string,",
+				"          ciudad as string,",
+				"          departamento as string,",
+				"          tipo_cuartel as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> DimUnidad",
+				"source(output(",
+				"          zona_key as integer,",
+				"          id_zona as integer,",
+				"          nombre as string,",
+				"          departamento as string,",
+				"          frontera_con as string,",
+				"          tipo_terreno as string,",
+				"          altitud_msnm as integer,",
+				"          nivel_riesgo as string,",
+				"          acceso_carretero as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> DimZona",
+				"source(output(",
+				"          fecha_key as integer,",
+				"          fecha as date,",
+				"          dia_semana as integer,",
+				"          nombre_dia as string,",
+				"          dia_mes as integer,",
+				"          mes as integer,",
+				"          nombre_mes as string,",
+				"          trimestre as integer,",
+				"          anio as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> DimTiempo",
+				"Operaciones, DimTipoOperacion lookup(Operaciones@id_tipo == DimTipoOperacion@id_tipo,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> Tipo",
+				"Tipo, DimUnidad lookup(id_unidad_resp == id_unidad,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> Unidad",
+				"Unidad, DimZona lookup(Operaciones@id_zona == DimZona@id_zona,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> Zona",
+				"Zona derive(fecha_key = toInteger(toString(fecha_inicio, 'yyyyMMdd'))) ~> derivedColumn1",
+				"derivedColumn1, DimTiempo lookup(derivedColumn1@fecha_key == DimTiempo@fecha_key,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> fecha",
+				"fecha select(mapColumn(",
+				"          operacion_key,",
+				"          nombre_operacion,",
+				"          fecha_inicio,",
+				"          fecha_fin,",
+				"          efectivos_desplegados,",
+				"          duracion_dias,",
+				"          detenidos,",
+				"          tipo_operacion_key,",
+				"          nombre = DimTipoOperacion@nombre,",
+				"          unidad_key,",
+				"          nombre = DimUnidad@nombre,",
+				"          codigo,",
+				"          zona_key,",
+				"          nombre = DimZona@nombre,",
+				"          nivel_riesgo,",
+				"          fecha_key = DimTiempo@fecha_key",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          operacion_key as integer,",
+				"          fecha_key as integer,",
+				"          tipo_operacion_key as integer,",
+				"          unidad_resp_key as integer,",
+				"          zona_key as integer,",
+				"          nombre_operacion as string,",
+				"          fecha_inicio as date,",
+				"          fecha_fin as date,",
+				"          efectivos_desplegados as integer,",
+				"          vehiculos_utilizados as integer,",
+				"          duracion_dias as integer,",
+				"          costo_operacion as decimal(18,2),",
+				"          resultado as string,",
+				"          detenidos as integer,",
+				"          area_km2 as decimal(18,2),",
+				"          incidentes as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}

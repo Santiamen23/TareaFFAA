@@ -6,11 +6,60 @@
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
-			"sinks": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "mb_silver_efectivos",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "mb_gold_dim_efectivo",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [],
 			"scriptLines": [
-				""
+				"source(output(",
+				"          id_efectivo as integer,",
+				"          nombre as string,",
+				"          ci as string,",
+				"          fecha_nacimiento as date,",
+				"          genero as string,",
+				"          departamento_origen as string,",
+				"          fecha_ingreso as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT DISTINCT \\n    id_efectivo, \\n    nombre, \\n    ci, \\n    fecha_nacimiento, \\n    genero, \\n    departamento_origen, \\n    fecha_ingreso \\nFROM silver.tbl_efectivos',",
+				"     format: 'query') ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          efectivo_key as integer,",
+				"          id_efectivo as integer,",
+				"          nombre as string,",
+				"          ci as string,",
+				"          fecha_nacimiento as date,",
+				"          genero as string,",
+				"          departamento_origen as string,",
+				"          fecha_ingreso as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
