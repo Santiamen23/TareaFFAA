@@ -1,0 +1,32 @@
+{
+	"name": "mb_bronce_tipo_movs",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "mbBronce"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_tipo",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre",
+				"type": "varchar"
+			},
+			{
+				"name": "descripcion",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "bronze",
+			"table": "tbl_tipos_movimiento"
+		}
+	}
+}

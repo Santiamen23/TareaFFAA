@@ -81,70 +81,70 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "bronce_efectivos",
+						"referenceName": "mb_bronce_efectivos",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
 				},
 				{
 					"dataset": {
-						"referenceName": "bronce_especialidades",
+						"referenceName": "mb_bronce_especialidades",
 						"type": "DatasetReference"
 					},
 					"name": "sink2"
 				},
 				{
 					"dataset": {
-						"referenceName": "bronce_estruct_org",
+						"referenceName": "mb_bronce_estruct_org",
 						"type": "DatasetReference"
 					},
 					"name": "sink3"
 				},
 				{
 					"dataset": {
-						"referenceName": "bronce_mov_personal",
+						"referenceName": "mb_bronce_mov_personal",
 						"type": "DatasetReference"
 					},
 					"name": "sink4"
 				},
 				{
 					"dataset": {
-						"referenceName": "bronce_operaciones",
+						"referenceName": "mb_bronce_operaciones",
 						"type": "DatasetReference"
 					},
 					"name": "sink5"
 				},
 				{
 					"dataset": {
-						"referenceName": "bronce_rangos",
+						"referenceName": "mb_bronce_rangos",
 						"type": "DatasetReference"
 					},
 					"name": "sink6"
 				},
 				{
 					"dataset": {
-						"referenceName": "bronce_tipo_movs",
+						"referenceName": "mb_bronce_tipo_movs",
 						"type": "DatasetReference"
 					},
 					"name": "sink7"
 				},
 				{
 					"dataset": {
-						"referenceName": "bronce_tipo_operacion",
+						"referenceName": "mb_bronce_tipo_ops",
 						"type": "DatasetReference"
 					},
 					"name": "sink8"
 				},
 				{
 					"dataset": {
-						"referenceName": "bronce_unidades",
+						"referenceName": "mb_bronce_unidades",
 						"type": "DatasetReference"
 					},
 					"name": "sink9"
 				},
 				{
 					"dataset": {
-						"referenceName": "bronce_zonas",
+						"referenceName": "mb_bronce_zonas",
 						"type": "DatasetReference"
 					},
 					"name": "sink10"
@@ -288,10 +288,10 @@
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          id_efectivo as integer,",
-				"          id_especialidad as integer,",
-				"          id_unidad_actual as integer,",
-				"          id_rango_actual as integer,",
+				"          id_efectivo as string,",
+				"          id_especialidad as string,",
+				"          id_unidad_actual as string,",
+				"          id_rango_actual as string,",
 				"          nombre as string,",
 				"          ci as string,",
 				"          fecha_nacimiento as string,",
@@ -326,7 +326,7 @@
 				"source2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          id_especialidad as integer,",
+				"          id_especialidad as string,",
 				"          nombre as string,",
 				"          area as string",
 				"     ),",
@@ -346,8 +346,8 @@
 				"source3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          id_estructura as integer,",
-				"          id_padre as integer,",
+				"          id_estructura as string,",
+				"          id_padre as string,",
 				"          nivel as string,",
 				"          nombre as string,",
 				"          sigla as string,",
@@ -374,11 +374,11 @@
 				"source4 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          id_movimiento as integer,",
-				"          id_efectivo as integer,",
-				"          id_unidad_destino as integer,",
-				"          id_rango as integer,",
-				"          id_tipo as integer,",
+				"          id_movimiento as string,",
+				"          id_efectivo as string,",
+				"          id_unidad_destino as string,",
+				"          id_rango as string,",
+				"          id_tipo as string,",
 				"          fecha_movimiento as string,",
 				"          antiguedad_anios as string,",
 				"          salario_mensual as string,",
@@ -406,10 +406,10 @@
 				"source5 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          id_operacion as integer,",
-				"          id_tipo as integer,",
-				"          id_unidad_resp as integer,",
-				"          id_zona as integer,",
+				"          id_operacion as string,",
+				"          id_tipo as string,",
+				"          id_unidad_resp as string,",
+				"          id_zona as string,",
 				"          nombre_operacion as string,",
 				"          fecha_inicio as string,",
 				"          fecha_fin as string,",
@@ -452,10 +452,10 @@
 				"source6 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          id_rango as integer,",
+				"          id_rango as string,",
 				"          nombre as string,",
 				"          categoria as string,",
-				"          nivel_jerarquico as integer,",
+				"          nivel_jerarquico as string,",
 				"          abreviatura as string",
 				"     ),",
 				"     deletable:false,",
@@ -476,7 +476,7 @@
 				"source7 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          id_tipo as integer,",
+				"          id_tipo as string,",
 				"          nombre as string,",
 				"          descripcion as string",
 				"     ),",
@@ -496,7 +496,7 @@
 				"source8 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          id_tipo as integer,",
+				"          id_tipo as string,",
 				"          nombre as string,",
 				"          categoria as string",
 				"     ),",
@@ -516,8 +516,8 @@
 				"source9 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          id_unidad as integer,",
-				"          id_brigada as integer,",
+				"          id_unidad as string,",
+				"          id_brigada as string,",
 				"          nombre as string,",
 				"          codigo as string,",
 				"          ciudad as string,",
@@ -544,14 +544,14 @@
 				"source10 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          id_zona as integer,",
+				"          id_zona as string,",
 				"          nombre as string,",
 				"          departamento as string,",
 				"          frontera_con as string,",
 				"          tipo_terreno as string,",
-				"          altitud_msnm as integer,",
+				"          altitud_msnm as string,",
 				"          nivel_riesgo as string,",
-				"          acceso_carretero as boolean",
+				"          acceso_carretero as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",

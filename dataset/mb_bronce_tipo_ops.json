@@ -1,0 +1,32 @@
+{
+	"name": "mb_bronce_tipo_ops",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "mbBronce"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_tipo",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre",
+				"type": "varchar"
+			},
+			{
+				"name": "categoria",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "bronze",
+			"table": "tbl_tipos_operacion"
+		}
+	}
+}

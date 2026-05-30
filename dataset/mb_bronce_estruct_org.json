@@ -1,0 +1,48 @@
+{
+	"name": "mb_bronce_estruct_org",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "mbBronce"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_estructura",
+				"type": "varchar"
+			},
+			{
+				"name": "id_padre",
+				"type": "varchar"
+			},
+			{
+				"name": "nivel",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre",
+				"type": "varchar"
+			},
+			{
+				"name": "sigla",
+				"type": "varchar"
+			},
+			{
+				"name": "tipo",
+				"type": "varchar"
+			},
+			{
+				"name": "cobertura_departamentos",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "bronze",
+			"table": "tbl_estructura_organizacional"
+		}
+	}
+}

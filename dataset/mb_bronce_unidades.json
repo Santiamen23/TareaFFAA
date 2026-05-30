@@ -1,0 +1,48 @@
+{
+	"name": "mb_bronce_unidades",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "mbBronce"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_unidad",
+				"type": "varchar"
+			},
+			{
+				"name": "id_brigada",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre",
+				"type": "varchar"
+			},
+			{
+				"name": "codigo",
+				"type": "varchar"
+			},
+			{
+				"name": "ciudad",
+				"type": "varchar"
+			},
+			{
+				"name": "departamento",
+				"type": "varchar"
+			},
+			{
+				"name": "tipo_cuartel",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "bronze",
+			"table": "tbl_unidades"
+		}
+	}
+}
