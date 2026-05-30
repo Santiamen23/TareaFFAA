@@ -1,0 +1,54 @@
+{
+	"name": "mb_gold_dim_efectivo",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "mbGold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "efectivo_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_efectivo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "nombre",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ci",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_nacimiento",
+				"type": "date"
+			},
+			{
+				"name": "genero",
+				"type": "varchar"
+			},
+			{
+				"name": "departamento_origen",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fecha_ingreso",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "dim_efectivo"
+		}
+	}
+}

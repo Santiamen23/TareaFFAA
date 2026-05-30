@@ -1,0 +1,62 @@
+{
+	"name": "mb_gold_dim_tiempo",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "mbGold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "fecha_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "fecha",
+				"type": "date"
+			},
+			{
+				"name": "dia_semana",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "nombre_dia",
+				"type": "varchar"
+			},
+			{
+				"name": "dia_mes",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "mes",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "nombre_mes",
+				"type": "varchar"
+			},
+			{
+				"name": "trimestre",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "anio",
+				"type": "smallint",
+				"precision": 5
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "dim_tiempo"
+		}
+	}
+}
