@@ -1,0 +1,84 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-ucb-dw-ffaa-79464"
+		},
+		"Destino_DataLake_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Destino_DataLake'"
+		},
+		"Origen_ERP_FuerzasArmadas_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Origen_ERP_FuerzasArmadas'"
+		},
+		"Destino_DataLake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://saucbffaa79464.dfs.core.windows.net/"
+		},
+		"Origen_ERP_FuerzasArmadas_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "server02-fuerzas-armadas-bolivia.database.windows.net"
+		},
+		"Origen_ERP_FuerzasArmadas_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "erp-fuerzas-armadas-bolivia-2"
+		},
+		"Origen_ERP_FuerzasArmadas_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "userSisGer"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf-ucb-dw-ffaa-79464_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Destino_DataLake_accountKey": {
+						"value": "[parameters('Destino_DataLake_accountKey')]"
+					},
+					"Origen_ERP_FuerzasArmadas_password": {
+						"value": "[parameters('Origen_ERP_FuerzasArmadas_password')]"
+					},
+					"Destino_DataLake_properties_typeProperties_url": {
+						"value": "[parameters('Destino_DataLake_properties_typeProperties_url')]"
+					},
+					"Origen_ERP_FuerzasArmadas_properties_typeProperties_server": {
+						"value": "[parameters('Origen_ERP_FuerzasArmadas_properties_typeProperties_server')]"
+					},
+					"Origen_ERP_FuerzasArmadas_properties_typeProperties_database": {
+						"value": "[parameters('Origen_ERP_FuerzasArmadas_properties_typeProperties_database')]"
+					},
+					"Origen_ERP_FuerzasArmadas_properties_typeProperties_userName": {
+						"value": "[parameters('Origen_ERP_FuerzasArmadas_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
