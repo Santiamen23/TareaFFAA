@@ -191,15 +191,9 @@
 				"          efectivo_key,",
 				"          nombre = Efectivo@nombre,",
 				"          ci,",
-				"          genero,",
 				"          tipo_movimiento_key,",
-				"          nombre = TipoMov@nombre,",
 				"          unidad_origen_key = UnidadOrigen1@unidad_key,",
-				"          nombre = UnidadOrigen1@nombre,",
-				"          codigo = UnidadOrigen1@codigo,",
 				"          unidad_destino_key = UndidadDestino@unidad_key,",
-				"          nombre = UndidadDestino@nombre,",
-				"          codigo = UndidadDestino@codigo,",
 				"          fecha_key = Tiempo@fecha_key",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
@@ -226,7 +220,14 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          fecha_key,",
+				"          efectivo_key,",
+				"          unidad_origen_key,",
+				"          unidad_destino_key,",
+				"          tipo_movimiento_key",
+				"     )) ~> sink1"
 			]
 		}
 	}

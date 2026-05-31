@@ -169,19 +169,10 @@
 				"fecha select(mapColumn(",
 				"          operacion_key,",
 				"          nombre_operacion,",
-				"          fecha_inicio,",
-				"          fecha_fin,",
 				"          efectivos_desplegados,",
-				"          duracion_dias,",
-				"          detenidos,",
 				"          tipo_operacion_key,",
-				"          nombre = DimTipoOperacion@nombre,",
 				"          unidad_key,",
-				"          nombre = DimUnidad@nombre,",
-				"          codigo,",
 				"          zona_key,",
-				"          nombre = DimZona@nombre,",
-				"          nivel_riesgo,",
 				"          fecha_key = DimTiempo@fecha_key",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
@@ -213,7 +204,14 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          fecha_key,",
+				"          tipo_operacion_key,",
+				"          zona_key,",
+				"          nombre_operacion,",
+				"          efectivos_desplegados",
+				"     )) ~> sink1"
 			]
 		}
 	}
